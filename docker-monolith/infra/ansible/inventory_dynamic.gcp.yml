@@ -1,0 +1,15 @@
+plugin: gcp_compute
+projects:
+  - docker-269720
+zones:
+  - "europe-west1-b"
+auth_kind: serviceaccount
+service_account_file: "~/.config/gcloud/docker.json"
+hostnames:
+  - name
+groups:
+  app: "'app' in name"
+  db: "'db' in name"
+compose:
+  ansible_host: networkInterfaces[0].accessConfigs[0].natIP
+  privateIP: networkInterfaces[0].networkIP

@@ -1,0 +1,35 @@
+{
+    "variables": {
+	"id": null,
+	"type": "f1-micro",
+	"description": "Created by Packer",
+	"hdd_t": "pd-standard",
+	"hdd_s": "10",
+	"net": "default",
+	"tag_net": "",
+	"image": null
+	},
+    "builders": [
+        {
+            "type": "googlecompute",
+            "project_id": "{{user `id`}}",
+            "image_name": "docker-host-base-{{timestamp}}",
+            "image_family": "docker-host-base",
+	    "image_description": "{{user `description`}}",
+	    "disk_type": "{{user `hdd_t`}}",
+	    "disk_size": "{{user `hdd_s`}}",
+	    "network": "{{user `net`}}",
+	    "tags": "{{user `tag_net`}}",
+            "source_image_family": "{{user `image`}}",
+            "zone": "europe-west1-b",
+            "ssh_username": "appuser",
+            "machine_type": "{{user `type`}}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "playbook_file": "/root/vitrez_microservices/docker-monolith/infra/ansible/docker-host.yml"
+        }
+    ]
+}

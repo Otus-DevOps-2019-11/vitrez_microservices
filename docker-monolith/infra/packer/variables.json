@@ -1,0 +1,7 @@
+{
+	"id": "docker-269720",
+	"type": "g1-small",
+	"tag_net": "reddit-app",
+	"description": "docker-host-base image created RV",
+	"image": "ubuntu-1604-lts"
+}

@@ -1,0 +1,62 @@
+---
+- name: Prepare docker-host
+  hosts: all
+  become: true
+  tasks:
+
+    - name: Install packages for use a repository over HTTPS
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+        install_recommends: yes
+        update_cache: yes
+
+    - name: Add Docker GPG key
+      apt_key: 
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repo
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+        state: present
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        pkg:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - python-docker
+        install_recommends: yes
+        update_cache: yes
+
+    - name: Add docker group
+      group:
+        name: docker
+        state: present
+
+    - name: Add appuser to docker group
+      user:
+        name: appuser
+        groups: docker
+        append: yes
+
+    - name: Enabled and start Docker
+      systemd:
+        name: docker
+        enabled: yes
+        state: restarted
+
+    - name: Run docker container
+      docker_container:
+        name: reddit
+        state: started
+        image: vitrez/otus-reddit:1.0
+        network_mode: host
+        restart_policy: always
