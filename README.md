@@ -1,5 +1,23 @@
 # vitrez_microservices
 
+
+######### docker-3 ###################################################
+
+Что было сделано:
+
+- Загружено и развёрнуто микросервисное приложение на docker-host, создана своя сеть
+- Проверена работоспособность приложения при перезапуске контейнеров с другими сетевыми алиасами с помощью параметра --env
+- Оптимизированы образы с использованием образа alpine:3.9.5 и заменой некоторых команд
+- Создан и подключен Docker volume, проверена сохранность постов при пересоздании контейнеров
+
+
+Пример команд по перезапуску с другими сетевыми алиасами:
+
+docker run -d --network=reddit --network-alias=db mongo:latest
+docker run -d --network=reddit --network-alias=srvP -e "POST_DATABASE_HOST=db"  vitrez/post:1.0
+docker run -d --network=reddit --network-alias=srvC -e "COMMENT_DATABASE_HOST=db" vitrez/comment:1.0
+docker run -d --network=reddit -p 9292:9292  -e "POST_SERVICE_HOST=srvP"  -e "COMMENT_SERVICE_HOST=srvC" vitrez/ui:1.0
+
 ######### docker-2 ###################################################
 
 Что было сделано:
