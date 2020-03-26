@@ -1,4 +1,4 @@
-image: ruby:2.4.2
+image: docker:19.03.1
 
 stages:
   - build
@@ -11,9 +11,9 @@ variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
 
 build_job:
+  services:
+    - docker:19.03.1-dind
   stage: build
-#  before_script:
-#    - sudo docker info
   script:
     - echo 'Building'
     - cd docker-monolith
