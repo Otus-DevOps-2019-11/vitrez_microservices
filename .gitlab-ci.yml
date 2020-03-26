@@ -18,6 +18,9 @@ build_job:
   stage: build
   script:
     - echo 'Building'
+    - cd ./docker-monolith
+    - sudo docker build -t vitrez/pipeline-reddit:1.1 .
+    - sudo docker images -a
 
 test_unit_job:
   stage: test
@@ -35,6 +38,7 @@ deploy_dev_job:
   stage: review
   script:
     - echo 'Deploy'
+    - sudo docker run -d --name stage-reddit vitrez/pipeline-reddit:1.1
   environment:
     name: dev
     url: http://dev.example.com
