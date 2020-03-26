@@ -13,7 +13,7 @@ variables:
 build_job:
   stage: build
   before_script:
-    - docker info
+    - sudo docker info
   script:
     - echo 'Building'
     - cd docker-monolith
