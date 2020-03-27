@@ -1,4 +1,4 @@
-image: docker:latest
+image: docker:19.03.0
 
 stages:
   - build
@@ -12,7 +12,7 @@ variables:
 
 build_job:
   services:
-    - docker:dind
+    - docker:19.03.0-dind
   stage: build
   before_script:
     - echo 'Getting, building and publishing reddit'
