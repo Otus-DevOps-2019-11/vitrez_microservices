@@ -20,7 +20,8 @@ build_job:
       #command: ["dockerd-entrypoint.sh"]
   stage: build
   before_script:
-    - echo 'Getting, building and publishing reddit'
+    - docker version
+    - chkconfig docker on
     - docker info
   script:
     - echo 'Building'
