@@ -1,4 +1,4 @@
-image: 18.09.4
+image: docker:18.09
 
 stages:
   - build
@@ -14,7 +14,7 @@ variables:
 
 build_job:
   services:
-    - docker:18.09.4-dind
+    - docker:18.09-dind
   stage: build
   before_script:
     - echo 'Getting, building and publishing reddit'
