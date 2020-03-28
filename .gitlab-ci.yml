@@ -9,7 +9,7 @@ stages:
 build_job:
   stage: build
   before_script:
-    - - echo 'Building docker-monolith'
+    - echo 'Building docker-monolith'
   script:
     - docker info
     - cd docker-monolith
