@@ -1,4 +1,4 @@
-image: docker:18.06.3
+image: docker
 
 stages:
   - build
@@ -9,12 +9,15 @@ stages:
 
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
-  DOCKER_HOST: tcp://127.0.0.1:2375
-  #DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
 
 build_job:
   services:
-    - docker:18.06.3-dind
+    - name: docker:dind
+      entrypoint: ["env", "-u", "DOCKER_HOST"]
+      command: ["dockerd-entrypoint.sh"]
   stage: build
   before_script:
     - echo 'Getting, building and publishing reddit'
