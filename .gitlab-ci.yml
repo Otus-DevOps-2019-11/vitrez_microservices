@@ -20,7 +20,7 @@ build_job:
       #command: ["dockerd-entrypoint.sh"]
   stage: build
   before_script:
-    - docker version
+    #- docker version
     - chkconfig docker on
     - docker info
   script:
