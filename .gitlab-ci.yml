@@ -18,7 +18,7 @@ build_job:
   stage: build
   before_script:
     - echo 'Getting, building and publishing reddit'
-    - docker info
+    - sudo docker info
   script:
     - echo 'Building'
     - cd docker-monolith
