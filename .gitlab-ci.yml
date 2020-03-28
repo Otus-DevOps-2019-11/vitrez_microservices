@@ -11,10 +11,10 @@ build_job:
   before_script:
     - echo 'Building docker-monolith'
   script:
-    - docker info
+    - sudo docker info
     - cd docker-monolith
-    - docker build -t vitrez/pipeline-reddit:1.1 .
-    - docker images -a
+    - sudo docker build -t vitrez/pipeline-reddit:1.1 .
+    - sudo docker images -a
 
 test_unit_job:
   stage: test
@@ -30,7 +30,7 @@ deploy_dev_job:
   stage: review
   script:
     - echo 'Deploy'
-    - docker run -d --name reddit -d -p 9292:9292 vitrez/pipeline-reddit:1.1
+    - sudo docker run -d --name reddit -d -p 9292:9292 vitrez/pipeline-reddit:1.1
   environment:
     name: dev
     url: http://dev.example.com
