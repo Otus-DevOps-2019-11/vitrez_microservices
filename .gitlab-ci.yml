@@ -10,7 +10,7 @@ stages:
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
   #DOCKER_HOST: 'tcp://localhost:2378'
-  #DOCKER_DRIVER: 'overlay2'
+  DOCKER_DRIVER: overlay2
 
 build_job:
   #services:
