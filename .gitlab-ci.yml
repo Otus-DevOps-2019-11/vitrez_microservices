@@ -18,15 +18,13 @@ build_job:
 
 test_unit_job:
   stage: test
-  services:
-    - mongo:latest
   script:
-    - ruby simpletest.rb
+    - echo 'Unit tests'
 
 test_integration_job:
   stage: test
   script:
-    - echo 'Testing 2'
+    - echo 'Integration tests'
 
 deploy_dev_job:
   stage: review
