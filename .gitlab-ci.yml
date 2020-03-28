@@ -1,5 +1,3 @@
-image: docker:latest
-
 stages:
   - build
   - test
@@ -7,24 +5,13 @@ stages:
   - stage
   - production
 
-variables:
-  DATABASE_URL: 'mongodb://mongo/user_posts'
-  #DOCKER_HOST: tcp://docker:2375
-  DOCKER_DRIVER: overlay2
-  #DOCKER_TLS_CERTDIR: ""
 
 build_job:
-  services:
-    - name: docker:dind
-      #entrypoint: ["env", "-u", "DOCKER_HOST"]
-      #command: ["dockerd-entrypoint.sh"]
   stage: build
   before_script:
-    #- docker version
-    - chkconfig docker on
-    - docker info
+    - - echo 'Building docker-monolith'
   script:
-    - echo 'Building'
+    - docker info
     - cd docker-monolith
     - docker build -t vitrez/pipeline-reddit:1.1 .
     - docker images -a
@@ -45,7 +32,7 @@ deploy_dev_job:
   stage: review
   script:
     - echo 'Deploy'
-    - sudo docker run -d --name stage-reddit vitrez/pipeline-reddit:1.1
+    - docker run -d --name reddit -d -p 9292:9292 vitrez/pipeline-reddit:1.1
   environment:
     name: dev
     url: http://dev.example.com
