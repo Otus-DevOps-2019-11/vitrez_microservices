@@ -1,0 +1,80 @@
+#image: ruby:2.4.2
+
+stages:
+  - build
+  - test
+  - review
+  - stage
+  - production
+
+variables:
+  DATABASE_URL: 'mongodb://mongo/user_posts'
+
+before_script:
+  - cd reddit
+  - bundle install
+
+build_job:
+  stage: build
+  before_script:
+    - echo 'Building docker-monolith'
+  script:
+    - sudo docker info
+    - cd docker-monolith
+    - sudo docker build -t vitrez/pipeline-reddit:1.1 .
+    - sudo docker images -a
+
+test_unit_job:
+  stage: test
+  #services:
+  #  - mongo:latest
+  script:
+    #- ruby simpletest.rb
+    - echo 'Unit tests'
+
+test_integration_job:
+  stage: test
+  script:
+    - echo 'Integration tests'
+
+deploy_dev_job:
+  stage: review
+  script:
+    - echo 'Deploy'
+    - sudo docker run -d --name reddit -d -p 9292:9292 vitrez/pipeline-reddit:1.1
+  environment:
+    name: dev
+    url: http://dev.example.com
+
+branch review:
+  stage: review
+  script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
+  environment:
+    name: branch/$CI_COMMIT_REF_NAME
+    url: http://$CI_ENVIRONMENT_SLUG.example.com
+  only:
+    - branches
+  except:
+    - master
+
+staging:
+  stage: stage
+  when: manual
+  only:
+    - /^\d+\.\d+\.\d+/
+  script:
+    - echo 'Deploy'
+  environment:
+    name: stage
+    url: https://beta.example.com
+
+production:
+  stage: production
+  when: manual
+  only:
+    - /^\d+\.\d+\.\d+/
+  script:
+    - echo 'Deploy'
+  environment:
+    name: production
+    url: https://example.com
