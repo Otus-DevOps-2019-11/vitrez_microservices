@@ -14,9 +14,9 @@ all: build push
 
 
 # abstract target 'build' dependent on other abstract goals
-.PHONY : build ui comment post prometheus blackbox
+.PHONY : build ui comment post prometheus blackbox alertmanager grafana
 
-build: ui comment post prometheus blackbox
+build: ui comment post prometheus blackbox alertmanager grafana
 	@echo "Building reddit app and infra docker images finished."
 
 ui:
@@ -34,11 +34,17 @@ prometheus:
 blackbox:
 	cd monitoring/blackbox_exporter && docker build -t ${USERNAME}/blackbox_exporter .
 
+alertmanager:
+	cd monitoring/alertmanager && docker build -t ${USERNAME}/alertmanager .
+
+grafana:
+	cd monitoring/grafana && docker build -t ${USERNAME}/grafana .
+
 
 # abstract target 'push' dependent on other abstract goals
-.PHONY : push ui-push comment-push post-push prometheus-push blackbox-push
+.PHONY : push ui-push comment-push post-push prometheus-push blackbox-push alertmanager-push grafana-push
 
-push: ui-push comment-push post-push prometheus-push blackbox-push
+push: ui-push comment-push post-push prometheus-push blackbox-push alertmanager-push grafana-push
 	@echo "Pushing docker images to Dockerhub finished."
 
 ui-push:
@@ -55,3 +61,9 @@ prometheus-push:
 
 blackbox-push:
 	docker push ${USERNAME}/blackbox_exporter:latest
+
+alertmanager-push:
+        docker push ${USERNAME}/alertmanager:latest
+
+grafana-push:
+        docker push ${USERNAME}/grafana:latest
