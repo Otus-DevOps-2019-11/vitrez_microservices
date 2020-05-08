@@ -1,14 +1,13 @@
-FROM alpine:3.9.5
-RUN apk add --no-cache --update ruby-full ruby-dev build-base \
-    && gem install bundler -v 1.17.2
+FROM ruby:2.2
+RUN apt-get update -qq && apt-get install -y build-essential
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
 
 WORKDIR $APP_HOME
-COPY Gemfile* $APP_HOME/
+ADD Gemfile* $APP_HOME/
 RUN bundle install
-COPY . $APP_HOME
+ADD . $APP_HOME
 
 ENV POST_SERVICE_HOST post
 ENV POST_SERVICE_PORT 5000
