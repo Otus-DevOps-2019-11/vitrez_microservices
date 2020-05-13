@@ -1,5 +1,24 @@
 # vitrez_microservices
 
+######### kubernetes-1 ###################################################
+
+Что было сделано:
+
+- Созданы манифесты comment-deployment.yml, mongo-deployment.yml, post-deployment.yml и ui-deployment.yml для нашего микросервисного приложения
+- Создан кластер Kubernetes по руководству "Kubernetes The Hard Way" и запущены на нём наши приложения:
+
+# kubectl get pods -o wide --all-namespaces
+NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+default       busybox                               1/1     Running   3          3h13m   10.200.0.4   worker-0   <none>           <none>
+default       comment-deployment-5977b8df97-88l5n   1/1     Running   0          138m    10.200.0.8   worker-0   <none>           <none>
+default       mongo-deployment-86d49445c4-gphr2     1/1     Running   0          140m    10.200.0.6   worker-0   <none>           <none>
+default       nginx-554b9c67f9-zth5h                1/1     Running   0          177m    10.200.0.5   worker-0   <none>           <none>
+default       post-deployment-f446744b7-hgz76       1/1     Running   0          139m    10.200.0.7   worker-0   <none>           <none>
+default       ui-deployment-6dfcdd8c95-cctrw        1/1     Running   0          138m    10.200.0.9   worker-0   <none>           <none>
+kube-system   coredns-5fb99965-d4kj8                1/1     Running   0          3h19m   10.200.0.2   worker-0   <none>           <none>
+kube-system   coredns-5fb99965-gtsr7                1/1     Running   0          3h19m   10.200.0.3   worker-0   <none>           <none>
+
+
 ######### logging-1 ###################################################
 
 Что было сделано:
