@@ -1,5 +1,12 @@
 # vitrez_microservices
 
+######### kubernetes-3 ###################################################
+
+Что было сделано:
+
+- Проведён эксперимент с выключением-включением kube-dns
+- Созданы и проверены практикой манифесты для: сервисов ClusterIP, NodePort, LoadBalancer, Ingress, secrets, network policy, томов и объектов типа PersistentVolume, PersistentVolumeClaim, StorageClass
+
 ######### kubernetes-2 ###################################################
 
 Что было сделано:
